@@ -39,7 +39,7 @@ public class ForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
+        setHasOptionsMenu(true);
         String[] forecastArray = {"Today, Sunny - 10 / 5",
                 "Tomorrow, Sunny - 10 / 5",
                 "Tuesday, Sunny - 10 / 5",
