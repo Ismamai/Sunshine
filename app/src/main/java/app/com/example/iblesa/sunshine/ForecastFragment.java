@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -36,10 +37,22 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // This line will make the fragment to call onCreateOptionsMenu
+        setHasOptionsMenu(true);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        setHasOptionsMenu(true);
         String[] forecastArray = {"Today, Sunny - 10 / 5",
                 "Tomorrow, Sunny - 10 / 5",
                 "Tuesday, Sunny - 10 / 5",
