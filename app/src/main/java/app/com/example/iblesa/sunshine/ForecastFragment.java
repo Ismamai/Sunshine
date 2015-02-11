@@ -175,6 +175,7 @@ public class ForecastFragment extends Fragment {
                 weatherDataFromJson = getWeatherDataFromJson(forecastJsonStr, count);
 
             } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
             }
             Log.d(LOG_TAG, weatherDataFromJson[0]);
