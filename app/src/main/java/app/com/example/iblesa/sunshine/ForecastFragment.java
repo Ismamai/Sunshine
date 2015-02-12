@@ -35,6 +35,8 @@ import java.util.List;
  */
 public class ForecastFragment extends Fragment {
 
+    private ArrayAdapter<String> adapter;
+
     public ForecastFragment() {
     }
 
@@ -70,17 +72,28 @@ public class ForecastFragment extends Fragment {
                 "Wednesday, Sunny - 10 / 5",
                 "Thursday, Sunny - 10 / 5"};
 
+        List<String> arrayList = new ArrayList<>();
+        for (String s :forecastArray) {
+            arrayList.add(s);
+        }
 
 
-
-        List<String> arrayList = new ArrayList<>(Arrays.asList(forecastArray));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, forecastArray);
+        adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, arrayList);
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
         return rootView;
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
+        @Override
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                adapter.clear();
+                for (String s : result) {
+                    adapter.add(s);
+                }
+            }
+        }
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
         @Override
@@ -94,8 +107,8 @@ public class ForecastFragment extends Fragment {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             String postalCode = params[0];
-            String mode = params[0];
-            String units = params[0];
+            String mode;
+            String units;
             int count = 7;
 
 // Will contain the raw JSON response as a string.
@@ -153,7 +166,7 @@ public class ForecastFragment extends Fragment {
                     forecastJsonStr = null;
                 }
                 forecastJsonStr = buffer.toString();
-                Log.d(LOG_TAG, forecastJsonStr);
+//                Log.d(LOG_TAG, forecastJsonStr);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attempting
@@ -172,13 +185,14 @@ public class ForecastFragment extends Fragment {
                 }
             }
             try {
+//                Log.d(LOG_TAG,forecastJsonStr);
                 weatherDataFromJson = getWeatherDataFromJson(forecastJsonStr, count);
-
+//                Log.d(LOG_TAG, weatherDataFromJson.toString());
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
             }
-            Log.d(LOG_TAG, weatherDataFromJson[0]);
+         //   Log.d(LOG_TAG, weatherDataFromJson[0]);
             return weatherDataFromJson;
         }
     }
