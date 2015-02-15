@@ -88,6 +88,9 @@ public class ForecastFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Context context = parent.getContext();
+                // different way to get the context from current activity
+//                Context context2 = getActivity();
+
 
                 CharSequence text =  parent.getAdapter().getItem(position).toString();
                 int duration = Toast.LENGTH_SHORT;
