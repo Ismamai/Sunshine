@@ -1,6 +1,7 @@
 package app.com.example.iblesa.sunshine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -93,10 +94,9 @@ public class ForecastFragment extends Fragment {
 
 
                 CharSequence text =  parent.getAdapter().getItem(position).toString();
-                int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                Intent intent = new Intent(getActivity(), DetailedActivity.class);
+                startActivity(intent);
             }
         });
         return rootView;
