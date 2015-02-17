@@ -2,9 +2,11 @@ package app.com.example.iblesa.sunshine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -59,7 +62,9 @@ public class ForecastFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (R.id.action_refresh == item.getItemId()) {
-            new FetchWeatherTask().execute("dublin,ireland");
+            final SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            final String location = defaultSharedPreferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+            new FetchWeatherTask().execute(location);
             return true;
         }
         return super.onOptionsItemSelected(item);
