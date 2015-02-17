@@ -93,10 +93,10 @@ public class ForecastFragment extends Fragment {
 //                Context context2 = getActivity();
 
 
-                CharSequence text =  parent.getAdapter().getItem(position).toString();
+                final String forecast = adapter.getItem(position);
 
                 Intent intent = new Intent(getActivity(), DetailedActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, text);
+                intent.putExtra(Intent.EXTRA_TEXT, forecast);
                 startActivity(intent);
             }
         });
