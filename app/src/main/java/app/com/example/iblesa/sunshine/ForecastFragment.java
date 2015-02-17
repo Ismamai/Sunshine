@@ -88,10 +88,6 @@ public class ForecastFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Context context = parent.getContext();
-                // different way to get the context from current activity
-//                Context context2 = getActivity();
-
 
                 final String forecast = adapter.getItem(position);
 
