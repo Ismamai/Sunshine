@@ -15,4 +15,20 @@
 
     <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
     <string name="pref_location_default" translatable="false">Dublin, Ireland</string>
+
+    <!-- Label for the location preference [CHAR LIMIT=30] -->
+    <string name="pref_units_label">Temperature Units</string>
+
+    <!-- Key name for storing mesure system in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_units_key" translatable="false">units</string>
+
+    <!-- Default temperature unit system preference [CHAR LIMIT=NONE] -->
+    <string name="pref_units_default" >Metric</string>
+
+    <!-- Default temperature unit metric [CHAR LIMIT=NONE] -->
+    <string name="pref_units_metric" translatable="false">metric</string>
+
+    <!-- Default temperature unit metric [CHAR LIMIT=NONE] -->
+    <string name="pref_units_imperial" translatable="false">imperial</string>
+
 </resources>
