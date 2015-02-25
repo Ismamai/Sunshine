@@ -1,4 +1,4 @@
-package app.com.example.iblesa.sunshine;
+package com.example.android.shunshine.app;
 
 import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import app.com.example.iblesa.sunshine.R;
 
 
 public class DetailedActivity extends ActionBarActivity {

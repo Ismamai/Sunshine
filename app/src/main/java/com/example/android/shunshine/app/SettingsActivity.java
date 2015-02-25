@@ -1,4 +1,4 @@
-package app.com.example.iblesa.sunshine;
+package com.example.android.shunshine.app;
 
 /**
  * Created by iblesa on 17/02/15.
@@ -9,6 +9,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import app.com.example.iblesa.sunshine.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
