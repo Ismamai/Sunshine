@@ -1,4 +1,4 @@
-package com.example.android.shunshine.app;
+package com.example.android.sunshine.app;
 
 /**
  * Created by iblesa on 17/02/15.
