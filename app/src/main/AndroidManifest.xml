@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.com.example.iblesa.sunshine" >
+    package="com.example.android.sunshine" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.android.shunshine.app.DetailedActivity"
+            android:name="com.example.android.sunshine.app.DetailedActivity"
             android:label="@string/title_activity_detailed"
             android:parentActivityName="com.example.android.sunshine.app.MainActivity" >
             <meta-data

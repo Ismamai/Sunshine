@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import app.com.example.iblesa.sunshine.R;
+import com.example.android.sunshine.R;
 
 
 public class DetailedActivity extends ActionBarActivity {

@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import app.com.example.iblesa.sunshine.R;
+import com.example.android.sunshine.R;
 
 
 public class MainActivity extends ActionBarActivity {

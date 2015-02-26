@@ -10,7 +10,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-import app.com.example.iblesa.sunshine.R;
+import com.example.android.sunshine.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.

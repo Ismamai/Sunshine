@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import app.com.example.iblesa.sunshine.R;
+import com.example.android.sunshine.R;
 
 /**
  * A placeholder fragment containing a simple view.
