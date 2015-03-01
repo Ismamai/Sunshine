@@ -183,7 +183,7 @@ public class TestDb extends AndroidTestCase {
         // (you can use the validateCurrentRecord function in TestUtilities to validate the
         // query if you like)
         TestUtilities.validateCurrentRecord("Error: Weather entry retrieved not the right one", weatherCursor, weatherValues);
-
+        assertFalse("Error: There should be only one record", weatherCursor.moveToNext());
         // Finally, close the cursor and database
         weatherCursor.close();
         db.close();
