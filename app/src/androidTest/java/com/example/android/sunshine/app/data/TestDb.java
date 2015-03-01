@@ -151,6 +151,11 @@ public class TestDb extends AndroidTestCase {
     public void testWeatherTable() {
         // First insert the location, and then use the locationRowId to insert
         // the weather. Make sure to cover as many failure cases as you can.
+        SQLiteDatabase db = new WeatherDbHelper(
+                this.mContext).getWritableDatabase();
+        ContentValues locationValues = TestUtilities.createNorthPoleLocationValues();
+        long locationRowId;
+        locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, locationValues);
 
         // We return the rowId of the inserted location in testLocationTable, so
         // you should just call that function rather than rewriting it
@@ -159,17 +164,28 @@ public class TestDb extends AndroidTestCase {
 
         // Create ContentValues of what you want to insert
         // (you can use the createWeatherValues TestUtilities function if you wish)
+        ContentValues weatherValues = TestUtilities.createWeatherValues(locationRowId);
 
         // Insert ContentValues into database and get a row ID back
 
+        long weatherRowId = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, weatherValues);
+        assertTrue("Error: Unable to insert row in weatherTable",weatherRowId !=-1);
+
         // Query the database and receive a Cursor back
 
+        Cursor weatherCursor = db.query(WeatherContract.WeatherEntry.TABLE_NAME, null, null, null, null, null, null);
+
         // Move the cursor to a valid database row
+        assertTrue("Error: weather entry not retrieved", weatherCursor.moveToFirst());
+
 
         // Validate data in resulting Cursor with the original ContentValues
         // (you can use the validateCurrentRecord function in TestUtilities to validate the
         // query if you like)
+        TestUtilities.validateCurrentRecord("Error: Weather entry retrieved not the right one", weatherCursor, weatherValues);
 
         // Finally, close the cursor and database
+        weatherCursor.close();
+        db.close();
     }
 }
