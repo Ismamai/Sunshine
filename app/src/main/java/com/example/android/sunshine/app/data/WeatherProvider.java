@@ -86,6 +86,17 @@ public class WeatherProvider extends ContentProvider {
         );
     }
 
+    private Cursor getWeather(String[] projection, String selection, String[] selectionArgs,  String sortOrder) {
+        SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        return db.query(WeatherContract.WeatherEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+    }
+
+
+    private Cursor getLocation(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        return db.query(WeatherContract.LocationEntry.TABLE_NAME,projection, selection, selectionArgs, null, null, sortOrder );
+    }
+
     private Cursor getWeatherByLocationSettingAndDate(
             Uri uri, String[] projection, String sortOrder) {
         String locationSetting = WeatherContract.WeatherEntry.getLocationSettingFromUri(uri);
@@ -182,12 +193,12 @@ public class WeatherProvider extends ContentProvider {
             }
             // "weather"
             case WEATHER: {
-                retCursor = null;
+                retCursor = getWeather(projection, selection, selectionArgs, sortOrder);
                 break;
             }
             // "location"
             case LOCATION: {
-                retCursor = null;
+                retCursor = getLocation(projection, selection, selectionArgs, sortOrder);
                 break;
             }
 
