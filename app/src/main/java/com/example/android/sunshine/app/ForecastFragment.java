@@ -2,6 +2,8 @@ package com.example.android.sunshine.app;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -24,13 +26,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.example.android.sunshine.R;
+import com.example.android.sunshine.app.data.WeatherContract;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class ForecastFragment extends Fragment {
 
-    private ArrayAdapter<String> adapter;
+    private ForecastAdapter adapter;
 
     public ForecastFragment() {
     }
@@ -66,29 +69,30 @@ public class ForecastFragment extends Fragment {
     private void updateWeather() {
         final SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final String location = defaultSharedPreferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
-        new FetchWeatherTask(getActivity(), adapter).execute(location);
+        new FetchWeatherTask(getActivity()).execute(location);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        //Sort order: Ascending by date.
+        String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
 
-        adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, new ArrayList<String>());
+        String locationSetting = Utility.getPreferredLocation(getActivity());
+
+        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(locationSetting, System.currentTimeMillis());
+
+        Cursor cursor = getActivity().getContentResolver().query(weatherForLocationUri, null, null, null, sortOrder);
+
+        // The CursorAdapter will take data from our cursor and populate the ListView
+        // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
+        // up with an empty list the first time we run.
+         adapter = new ForecastAdapter(getActivity(), cursor, 0);
+
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                final String forecast = adapter.getItem(position);
-
-                Intent intent = new Intent(getActivity(), DetailedActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, forecast);
-                startActivity(intent);
-            }
-        });
         return rootView;
     }
 
