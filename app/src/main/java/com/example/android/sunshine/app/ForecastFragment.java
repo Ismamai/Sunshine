@@ -85,11 +85,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     }
 
-    @Override
-    public void onStart() {
-        updateWeather();
-        super.onStart();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -251,6 +246,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
+
+    }
+
+    public void onLocationChanged(){
+        updateWeather();
+        getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
 
     }
 }

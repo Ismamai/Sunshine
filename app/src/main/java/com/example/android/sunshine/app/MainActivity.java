@@ -1,9 +1,7 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,16 +13,23 @@ import com.example.android.sunshine.R;
 
 public class MainActivity extends ActionBarActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
+
+    private final String FORECASTFRAGMENT_TAG = "FORECASTFRAGMENT_TAG";
+
+    private String mLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mLocation = Utility.getPreferredLocation(this);
         super.onCreate(savedInstanceState);
         Log.d(LOG_TAG, "onCreate");
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ForecastFragment())
+                    .add(R.id.container, new ForecastFragment(), FORECASTFRAGMENT_TAG)
                     .commit();
         }
+
+        mLocation = Utility.getPreferredLocation(this);
     }
 
 
@@ -83,6 +88,15 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        final String preferredLocation = Utility.getPreferredLocation(this);
+        if (preferredLocation!=null && !preferredLocation.equals(mLocation)) {
+            ForecastFragment ff = (ForecastFragment)getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
+            if (null != ff) {
+                ff.onLocationChanged();
+            }
+            mLocation = preferredLocation;
+        }
+
         Log.d(LOG_TAG, "onResume");
 
     }
