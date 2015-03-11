@@ -133,6 +133,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
             JSONObject cityJson = forecastJson.getJSONObject(OWM_CITY);
             String cityName = cityJson.getString(OWM_CITY_NAME);
+            Log.d(LOG_TAG, "Retrieved data for " + cityName);
 
             JSONObject cityCoord = cityJson.getJSONObject(OWM_COORD);
             double cityLatitude = cityCoord.getDouble(OWM_LATITUDE);
@@ -212,6 +213,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
                 weatherValues.put(WeatherEntry.COLUMN_WEATHER_ID, weatherId);
 
                 cVVector.add(weatherValues);
+
+                Log.d(LOG_TAG, weatherValues.toString());
             }
 
             // add to database
