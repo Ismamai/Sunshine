@@ -125,15 +125,19 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         final long dateInMillis = data.getLong(COL_WEATHER_DATE);
 
-        TextView detailTextView = (TextView) getView().findViewById(R.id.detailed_forecast);
+        TextView detailTextView = (TextView) getView().findViewById(R.id.detailed_day_textview);
 
         detailTextView.setText(Utility.getFriendlyDayString(getActivity(), dateInMillis));
 
+        TextView detailDesc = (TextView) getView().findViewById(R.id.detailed_date_textview);
+
+        detailDesc.setText(Utility.getFormattedMonthDay(getActivity(), dateInMillis));
+
         String weatherDescription = data.getString(COL_WEATHER_DESC);
 
-        TextView detailDesc = (TextView) getView().findViewById(R.id.detailed_forecast);
+        TextView detailedForecast = (TextView) getView().findViewById(R.id.detailed_forecast);
 
-        detailDesc.setText(weatherDescription);
+        detailedForecast.setText(weatherDescription);
 
 
         boolean isMetric = Utility.isMetric(getActivity());
