@@ -35,13 +35,15 @@ public class ForecastAdapter extends CursorAdapter {
         // Read weather icon ID from cursor
         int weatherId = cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID);
         Log.d(LOG_TAG, " WeatherCode returned " + weatherId);
-
-        if (cursor.getPosition() == 0) {
+    switch (getItemViewType(cursor.getPosition())) {
+        case VIEW_TYPE_TODAY:
             viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
-
-        } else {
+            break;
+        case VIEW_TYPE_FUTURE_DAY:
             viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(weatherId));
-        }
+            break;
+
+    }
 
         // TODO Read date from cursor
 
