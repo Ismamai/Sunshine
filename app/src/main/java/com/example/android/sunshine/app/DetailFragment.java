@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.sunshine.R;
@@ -39,6 +40,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     static final int COL_WEATHER_WIND = 6;
     static final int COL_WEATHER_DEGREES = 7;
     static final int COL_WEATHER_PRESSURE = 8;
+    static final int COL_WEATHER_CONDITION_ID = 9;
     private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
     private static final String[] FORECAST_COLUMNS = {
@@ -56,7 +58,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
             WeatherContract.WeatherEntry.COLUMN_DEGREES,
-            WeatherContract.WeatherEntry.COLUMN_PRESSURE
+            WeatherContract.WeatherEntry.COLUMN_PRESSURE,
+            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID
     };
     private ShareActionProvider mShareActionProvider;
     private String mForecast;
@@ -123,6 +126,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             return;
         }
 
+        int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
+
+        ImageView imageView = (ImageView) getView().findViewById(R.id.list_item_icon);
+        Log.d(LOG_TAG, "WeatherCode returned " + weatherId);
+        imageView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
         final long dateInMillis = data.getLong(COL_WEATHER_DATE);
 
         TextView detailTextView = (TextView) getView().findViewById(R.id.detailed_day_textview);
