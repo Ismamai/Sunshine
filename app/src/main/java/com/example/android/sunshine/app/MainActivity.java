@@ -11,10 +11,9 @@ import android.view.MenuItem;
 import com.example.android.sunshine.R;
 
 
-public class MainActivity extends ActionBarActivity {
-    private final String LOG_TAG = MainActivity.class.getSimpleName();
-
+public class MainActivity extends ActionBarActivity implements ForecastFragment.Callback {
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
     private String mLocation;
     private boolean mTwoPane;
 
@@ -101,7 +100,12 @@ public class MainActivity extends ActionBarActivity {
             if (null != ff) {
                 ff.onLocationChanged();
             }
+            DetailFragment df = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+            if (null != df) {
+                df.onLocationChanged(preferredLocation);
+            }
             mLocation = preferredLocation;
+
         }
 
         Log.d(LOG_TAG, "onResume");
@@ -119,6 +123,28 @@ public class MainActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(LOG_TAG, "onDestroy");
+
+    }
+
+    @Override
+    public void onItemSelected(Uri dateUri) {
+        if (mTwoPane) {
+
+            //in two pane mode, show the detail view in this activity by adding or replacing the detail fragment using a fragment transaction
+
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI, dateUri);
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(args);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.weather_detail_container, fragment, DETAILFRAGMENT_TAG)
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, DetailedActivity.class).setData(dateUri);
+            startActivity(intent);
+        }
 
     }
 }
